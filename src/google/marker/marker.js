@@ -58,7 +58,8 @@ class Marker extends DrawingInterface
     };
 
     dragend = () => {
-        this.isLocationPolygon()
+        this.saveDb();
+        this.isLocationPolygon();
     };
 }
 

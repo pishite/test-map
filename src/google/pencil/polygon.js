@@ -4,17 +4,19 @@ import {googleMapsApi, googleMapsConst} from '../../utils/googleApi'
 
 class Polygon extends DrawingInterface {
     events = [
-        // 'click'
+        'click'
     ];
 
-    constructor(chords) {
+    name = 'Polygon';
+
+    constructor(coords) {
         super();
 
         this.gooObject = googleMapsApi('Polygon', {
             clickable:      true,
             editable:       true,
             map:            Map.map,
-            paths:           chords,
+            paths:           coords,
             fillColor:      'red',
             strokeColor:    'red',
             strokeOpacity:  .6,
@@ -42,6 +44,20 @@ class Polygon extends DrawingInterface {
             this.addAlert(markers);
 
         return markers.length;
+    };
+
+    getLatLng = () => {
+        const result = [];
+
+        this.gooObject.getPath().forEach((latLng) => {
+            result.push([latLng.lat(), latLng.lng()]);
+        });
+
+        return result
+    };
+
+    click = event => {
+        DrawingInterface.infoWindow.open(this, event.latLng)
     };
 
     mouseup = () => {

@@ -1,9 +1,14 @@
 import InfoWindow from "./infoWindow";
+import {drawRemove, drawSave} from "../utils/ajax";
 
 let increment = 0;
 
 class DrawingInterface {
     id;
+
+    dbID;
+
+    name = 'DrawInterface';
 
     static infoWindow;
 
@@ -16,8 +21,31 @@ class DrawingInterface {
         this.id = increment++;
     }
 
+    saveDb = () => {
+        drawSave(this)
+            .then(data => {
+                if (data && 'id' in data && data.id)
+                    this.dbID = data.id
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    };
+
+    getId = () => {
+        return this.dbID ? this.dbID : null;
+    };
+
+    getLatLng = () => {
+        const latLng = this.gooObject.getPosition();
+
+        return [latLng.lat(), latLng.lng()];
+    };
+
     remove = () => {
         this.gooObject.setMap(null);
+
+        drawRemove(this);
     };
 
     click = () => {

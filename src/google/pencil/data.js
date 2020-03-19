@@ -22,13 +22,13 @@ class Data
     };
 
     geometry = geometry => {
-        const chords = [];
+        const coords = [];
 
-        geometry.forEachLatLng(latlng => chords.push(latlng) );
+        geometry.forEachLatLng(latlng => coords.push(latlng) );
 
         this.enableDrawMode(false);
 
-        this.addPolygonCallback(Polygon, chords);
+        this.addPolygonCallback(Polygon, coords);
     }
 }
 

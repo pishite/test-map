@@ -19,11 +19,14 @@ class InfoWindow
         return this.active;
     }
 
-    open(drawInterface) {
+    open(drawInterface, latLng) {
         if (this.id === drawInterface.id)
             return this.close();
 
         this.id = drawInterface.id;
+
+        if (latLng)
+            this.gooObject.setPosition(latLng);
 
         this.gooObject.open(Map.map, drawInterface.gooObject);
         this.active = true;

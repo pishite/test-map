@@ -11,7 +11,9 @@ class Map {
         const myOptions = {
             zoom: 12,
             center: myLatlng,
-            mapTypeId: googleMapsConst('MapTypeId', 'ROADMAP')
+            mapTypeId: googleMapsConst('MapTypeId', 'ROADMAP'),
+            mapTypeControl: true,
+            navigationControl: true
         };
 
         Map.map = googleMapsApi('Map',

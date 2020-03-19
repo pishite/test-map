@@ -4,6 +4,8 @@ import { googleMapsApi } from '../../utils/googleApi'
 
 class HumanMarker extends Marker
 {
+    name = 'People';
+
     constructor() {
         humanOptions.icon.scaledSize = googleMapsApi('Size', 48, 48);
 

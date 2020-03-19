@@ -66,8 +66,12 @@ class MapPanel extends Component {
     };
 
     addDraw = (draw, ...args) => {
+        const drawObject = new draw(args)
+
+        drawObject.saveDb();
+
         this.setState({
-            draw: [...this.state.draw, new draw(args)]
+            draw: [...this.state.draw, drawObject]
         });
     };
 
