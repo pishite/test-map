@@ -7,6 +7,7 @@ import Data from "../../google/pencil/data";
 import Marker from "../../google/marker/marker";
 import Polygon from "../../google/pencil/polygon";
 import DrawingInterface from "../../google/drawingInterface";
+import { gooApiUrl } from "../../utils/gooApiUrl";
 
 class MapPanel extends Component {
     state = {
@@ -22,8 +23,6 @@ class MapPanel extends Component {
     componentDidMount() {
         if (this.loaded)
             return;
-
-        const gooApiUrl = 'http://maps.google.com/maps/api/js?sensor=false&libraries=geometry&key=AIzaSyA-E_P2nCyGINEET6Ew9AR_XzSnoklRU94';
 
         loadScript(gooApiUrl, 'google-maps-api', () => {
             if (typeof window['google'] !== 'object')
