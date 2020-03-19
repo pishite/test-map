@@ -1,0 +1,35 @@
+version: "3.2"
+services:
+  php:
+    build: './docker/php/'
+    networks:
+      project:
+        ipv4_address: 172.41.0.2
+    volumes:
+      - ./backend/:/var/www/html/
+  apache:
+    build: './docker/apache/'
+    depends_on:
+      - php
+      - mysql
+    networks:
+      project:
+        ipv4_address: 172.41.0.3
+    ports:
+      - 8080:80
+    volumes:
+      - ./backend/:/var/www/html/
+  mysql:
+    image: mysql:5.6.40
+    networks:
+      project:
+        ipv4_address: 172.41.0.4
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+networks:
+    project:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.41.0.0/16
