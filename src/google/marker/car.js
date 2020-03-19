@@ -7,8 +7,8 @@ class CarMarker extends Marker
 {
     name = 'Car';
 
-    constructor() {
-        super(carOptions)
+    constructor(init) {
+        super(init, carOptions)
     }
 }
 

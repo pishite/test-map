@@ -6,10 +6,10 @@ class HumanMarker extends Marker
 {
     name = 'People';
 
-    constructor() {
+    constructor(init) {
         humanOptions.icon.scaledSize = googleMapsApi('Size', 48, 48);
 
-        super(humanOptions)
+        super(init, humanOptions)
     }
 }
 

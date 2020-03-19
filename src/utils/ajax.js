@@ -6,7 +6,6 @@ function request(uri, params) {
         };
     }
 
-    console.log('Request', uri, params)
     return fetch('index.php?' + uri, params)
         .then(response => {
             if (response.ok)
@@ -15,7 +14,7 @@ function request(uri, params) {
             throw new Error('Invalid response data');
         })
         .catch(response => {
-            alert('Send Error. Show more in console');
+            // alert('Send Error. Show more in console');
             console.log(response)
         });
 }
@@ -38,9 +37,34 @@ export function drawRemove(drawInterface) {
         method: 'DELETE',
         query: {
             id: drawInterface.getId(),
-            type: drawInterface.__proto__.constructor.name,
+            type: drawInterface.name,
         }
     };
 
-    return request('/draw/remove', params)
+    return request('/draw', params)
+}
+
+export function drawGet() {
+    const params = {
+        method: 'GET',
+    };
+
+    return request('/draw', params)
+}
+
+export function alertGet() {
+    const params = {
+        method: 'GET'
+    };
+
+    return request('/alert', params)
+}
+
+export function alertAdd(markers) {
+    const params = {
+        method: 'POST',
+        query: markers
+    };
+
+    return request('/alert', params)
 }

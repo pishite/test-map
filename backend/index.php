@@ -14,6 +14,10 @@ switch ($response->route()) {
         $response->statusCode(200);
 
         switch (true) {
+            case $response->isMethod('get'):
+                $response->data( $draw->select() );
+                break;
+
             case $response->isMethod('put'):
                 $response->data( $draw->update($response->post()) );
                 break;
@@ -34,20 +38,16 @@ switch ($response->route()) {
         break;
 
     case 'alert':
-        $draw = new Draw();
+        $draw = new Alert();
         $response->statusCode(200);
 
         switch (true) {
-            case $response->isMethod('put'):
-                $response->data( $draw->update($response->post()) );
-                break;
-
             case $response->isMethod('post'):
                 $response->data( $draw->insert($response->post()) );
                 break;
 
-            case $response->isMethod('delete'):
-                $response->data( $draw->delete($response->post()) );
+            case $response->isMethod('get'):
+                $response->data( $draw->select() );
                 break;
 
             default:

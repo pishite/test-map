@@ -28,12 +28,16 @@ class Marker extends DrawingInterface
         'click'
     ];
 
-    constructor(opts = {}) {
-        super();
+    constructor(init, opts = {}) {
+        super(init);
 
-        this.gooObject = googleMapsApi('Marker', {...this.options, ...opts})
+        if ('coords' in init)
+            opts.position = this.setLatLng(init.coords);
 
-        this.isLocationPolygon();
+        this.gooObject = googleMapsApi('Marker', {...this.options, ...opts});
+
+        if (!this.dbID)
+            this.isLocationPolygon();
 
         for(let eventName of this.events)
             this.gooObject.addListener(eventName, this[eventName])
@@ -52,7 +56,7 @@ class Marker extends DrawingInterface
         });
 
         if (isLocation)
-            this.addAlert(this);
+            this.addAlert([this]);
 
         return isLocation;
     };

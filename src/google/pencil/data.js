@@ -24,11 +24,12 @@ class Data
     geometry = geometry => {
         const coords = [];
 
-        geometry.forEachLatLng(latlng => coords.push(latlng) );
+        geometry.forEachLatLng(latlng =>
+            coords.push([latlng.lat(), latlng.lng()]) );
 
         this.enableDrawMode(false);
 
-        this.addPolygonCallback(Polygon, coords);
+        this.addPolygonCallback(Polygon, {coords});
     }
 }
 

@@ -9,14 +9,17 @@ class Polygon extends DrawingInterface {
 
     name = 'Polygon';
 
-    constructor(coords) {
-        super();
+    constructor(init) {
+        super(init);
+
+        if ('coords' in init)
+            init.coords = init.coords.map(coord => this.setLatLng(coord));
 
         this.gooObject = googleMapsApi('Polygon', {
             clickable:      true,
             editable:       true,
             map:            Map.map,
-            paths:           coords,
+            paths:          init.coords,
             fillColor:      'red',
             strokeColor:    'red',
             strokeOpacity:  .6,
@@ -24,9 +27,8 @@ class Polygon extends DrawingInterface {
             zIndex:         10
         });
 
-        this.gooObject.addListener('mouseup', this.mouseup);
-
-        this.isLocationPolygon()
+        if (!this.dbID)
+            this.isLocationPolygon();
 
         for(let eventName of this.events)
             this.gooObject.addListener(eventName, this[eventName])
@@ -59,10 +61,6 @@ class Polygon extends DrawingInterface {
     click = event => {
         DrawingInterface.infoWindow.open(this, event.latLng)
     };
-
-    mouseup = () => {
-        this.isLocationPolygon()
-    }
 }
 
 export default Polygon;

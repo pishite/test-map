@@ -1,32 +1,23 @@
 <?php
 
-class Alert extends Connector
+class Alert extends Connect
 {
+    public $table = 'alerts';
+
     public function insert($post)
     {
-        $sql = sprintf('insert into alert (coords, type) values ("%s", "%s")',
-            json_encode($post['coords']),
-            $post['type']
-        );
+        print_r($post);
+        foreach ($post as &$v) {
+            $v['coords'] = json_encode($v['coords']);
+        }
 
-        return ['id' => parent::insert($sql)];
+        return ['count' => parent::_insert_many($post)];
     }
 
-    public function update($post)
+    public function select()
     {
-        $sql = sprintf('update draws set coords="%s", type="%s" where id=%d',
-            json_encode($post['coords']),
-            $post['type'],
-            $post['id']
-        );
+        $sql = sprintf('select * from %s order by createStamp desc limit 50', $this->table);
 
-        return ['count' => parent::update($sql)];
-    }
-
-    public function delete($post)
-    {
-        $sql = sprintf('delete from draws where id=%d', $post['id']);
-
-        return ['count' => parent::delete($sql)];
+        return parent::_select($sql);
     }
 }

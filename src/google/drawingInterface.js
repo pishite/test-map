@@ -14,11 +14,15 @@ class DrawingInterface {
 
     gooObject;
 
-    constructor() {
+    constructor(init = null) {
         if (!DrawingInterface.infoWindow)
             DrawingInterface.infoWindow = new InfoWindow(this.infoContent());
 
         this.id = increment++;
+
+        if (init) {
+            this.dbID = 'id' in init && init.id ? init.id : this.dbID;
+        }
     }
 
     saveDb = () => {
@@ -34,6 +38,10 @@ class DrawingInterface {
 
     getId = () => {
         return this.dbID ? this.dbID : null;
+    };
+
+    setLatLng = (array) => {
+        return {lat: array[0], lng: array[1]}
     };
 
     getLatLng = () => {

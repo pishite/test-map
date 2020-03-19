@@ -1,29 +1,39 @@
 <?php
 
-class Draw extends Connector
+class Draw extends Connect
 {
+    public $table = 'draws';
+
     public function insert($post)
     {
-        $post['coords'] = json_encode($post['coords']),
+        $post['coords'] = json_encode($post['coords']);
 
-        return ['id' => parent::insert('draws', $post)];
+        return ['id' => parent::_insert($post)];
     }
 
     public function update($post)
     {
-        $sql = sprintf('update draws set coords="%s", type="%s" where id=%d',
-            json_encode($post['coords']),
-            $post['type'],
-            $post['id']
-        );
+        $post['coords'] = json_encode($post['coords']);
 
-        return ['count' => parent::update($sql)];
+        return ['count' => parent::_update($post)];
     }
 
     public function delete($post)
     {
-        $sql = sprintf('delete from draws where id=%d', $post['id']);
+        return ['count' => parent::_delete($post['id'])];
+    }
 
-        return ['count' => parent::delete($sql)];
+    public function select()
+    {
+        $sql = sprintf('select * from %s', $this->table);
+
+        $result = parent::_select($sql);
+
+        foreach ($result as $k => $v) {
+            $v['coords'] = json_decode($v['coords'], true);
+            $result[$k] = $v;
+        }
+
+        return $result;
     }
 }
