@@ -6,7 +6,6 @@ class Alert extends Connect
 
     public function insert($post)
     {
-        print_r($post);
         foreach ($post as &$v) {
             $v['coords'] = json_encode($v['coords']);
         }
